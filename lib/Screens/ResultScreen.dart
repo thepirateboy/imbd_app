@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:imbd_app/Networking.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ResultScreen extends StatefulWidget {
-  // const ResultScreen({ Key? key }) : super(key: key);
   static const id = "ResultScreen";
   late String title;
 
@@ -17,30 +15,26 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   bool error = false;
   Future<List<MovieCard>> _getCards() async {
-    List<MovieCard> users = [];
+    List<MovieCard> theCardList = [];
     var data = await http.get(Uri.parse(
         "http://www.omdbapi.com/?&apikey=349e0b0c&s=${widget.title}"));
 
     if (data.statusCode == 200) {
       var jsonData = json.decode(data.body);
 
-      // print("-------");
-      // print("${jsonData['Search'][4]['Title']}");
-      // print("The json length = ${jsonData['Search'].length}");
-
-      // print("json data = $jsonData");
-
       if (!jsonData.toString().contains("Response: False")) {
         setState(() {
           for (int i = 0; i < jsonData['Search'].length; i++) {
-            users.add(MovieCard(
+            theCardList.add(MovieCard(
               title: jsonData['Search'][i]['Title'],
-              description: jsonData['Search'][i]['Year'],
+              year: jsonData['Search'][i]['Year'],
+              imdbID: jsonData['Search'][i]['imdbID'],
+              type: jsonData['Search'][i]['Type'],
+              cover: jsonData['Search'][i]['Poster'],
             ));
           }
         });
       } else {
-        // print("error ea");
         setState(() {
           error = true;
         });
@@ -49,12 +43,7 @@ class _ResultScreenState extends State<ResultScreen> {
       print("FAILED");
     }
 
-    // print(
-    //     "the movie title and year = ${users[0].title} && ${users[0].description} ");
-
-    // print(users.length);
-
-    return users;
+    return theCardList;
   }
 
   @override
@@ -86,45 +75,35 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 }
 
-class ListTitle extends StatefulWidget {
-  // const ListTitle({ Key? key }) : super(key: key);
-
-  @override
-  _ListTitleState createState() => _ListTitleState();
-}
-
-class _ListTitleState extends State<ListTitle> {
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(builder: (context, snapshot) {
-      if (snapshot.connectionState != ConnectionState.done) {
-        return CircularProgressIndicator.adaptive();
-      }
-      if (snapshot.hasError) {
-        return Text("Error :(");
-      }
-      List<MovieCard> movieList = [];
-
-      return ListView(
-        children: movieList,
-      );
-    });
-  }
-}
-
 class MovieCard extends StatelessWidget {
-  // const MovieCard({ Key? key }) : super(key: key);
   String title;
-  String description;
-  MovieCard({required this.title, required this.description});
+  String year;
+  String imdbID;
+  String type;
+  String cover;
+  MovieCard(
+      {required this.title,
+      required this.year,
+      required this.imdbID,
+      required this.cover,
+      required this.type});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
-          Text("$title"),
-          Text("$description"),
+          Text(
+            "$title",
+            style: TextStyle(color: Colors.red),
+          ),
+          Image(image: NetworkImage(cover)),
+          Text("$year"),
+          Text(imdbID),
+          Text(type),
+          SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );
