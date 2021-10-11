@@ -21,7 +21,6 @@ class IMBdApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         InputScreen.id: (context) => InputScreen(),
-        ResultScreen.id: (context) => ResultScreen(),
       },
       initialRoute: InputScreen.id,
     );

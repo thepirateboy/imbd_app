@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:imbd_app/Networking.dart';
+import 'package:imbd_app/Screens/ResultScreen.dart';
 
 class InputScreen extends StatefulWidget {
   // const InputScreen({ Key? key }) : super(key: key);
@@ -102,8 +106,38 @@ class _InputScreenState extends State<InputScreen> {
             top: 500,
             child: TextButton(
               child: Text("SEND"),
-              onPressed: () {
+              onPressed: () async {
                 print(searchText);
+
+//                 var url =
+//                     "http://www.omdbapi.com/?&apikey=349e0b0c&s=$searchText}";
+
+//                 NetworkHelper networkhelper = NetworkHelper(url);
+
+//                 var returnData = await networkhelper.getData();
+
+//                 print(returnData['Search'][4]['Title']);
+
+//                 List<String> titleList = [];
+
+// //                 setState(() {
+// //   titleList.add(StoreDetails.fromJson(responseJson));
+// // });
+
+//                 for (var x in returnData) {
+//                   setState(() {
+//                     titleList.add(jsonDecode(x));
+//                   });
+//                 }
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultScreen(
+                      title: "$searchText",
+                    ),
+                  ),
+                );
               },
             ),
           )
