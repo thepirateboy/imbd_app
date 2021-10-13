@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:imbd_app/Networking.dart';
 import 'package:imbd_app/Screens/ResultScreen.dart';
 
 class InputScreen extends StatefulWidget {

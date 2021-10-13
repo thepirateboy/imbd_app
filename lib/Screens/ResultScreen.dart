@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:card_swiper/card_swiper.dart';
+
+import '../Items.dart';
+
 class ResultScreen extends StatefulWidget {
   static const id = "ResultScreen";
   late String title;
@@ -49,6 +53,7 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amberAccent,
       body: Container(
         child: FutureBuilder(
           future: _getCards(),
@@ -59,52 +64,28 @@ class _ResultScreenState extends State<ResultScreen> {
             } else if (snapshot.data == null) {
               return Center(child: CircularProgressIndicator.adaptive());
             } else {
-              return ListView.builder(
+              return Swiper(
+                layout: SwiperLayout.STACK,
+                itemHeight: 400,
+                itemWidth: MediaQuery.of(context).size.width - 2 * 64,
+                // GridView.builder
+                scrollDirection: Axis.horizontal,
                 itemCount: snapshot.data!.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     child: snapshot.data![index],
                   );
                 },
+                // gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                //   maxCrossAxisExtent: 200,
+                //   // childAspectRatio: 3 / 2,
+                //   crossAxisSpacing: 20,
+                //   mainAxisSpacing: 100,
+                // ),
               );
             }
           },
         ),
-      ),
-    );
-  }
-}
-
-class MovieCard extends StatelessWidget {
-  String title;
-  String year;
-  String imdbID;
-  String type;
-  String cover;
-  MovieCard(
-      {required this.title,
-      required this.year,
-      required this.imdbID,
-      required this.cover,
-      required this.type});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            "$title",
-            style: TextStyle(color: Colors.red),
-          ),
-          Image(image: NetworkImage(cover)),
-          Text("$year"),
-          Text(imdbID),
-          Text(type),
-          SizedBox(
-            height: 20,
-          ),
-        ],
       ),
     );
   }
