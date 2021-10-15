@@ -25,7 +25,6 @@ class _ResultScreenState extends State<ResultScreen> {
 
     if (data.statusCode == 200) {
       var jsonData = json.decode(data.body);
-
       if (!jsonData.toString().contains("Response: False")) {
         setState(() {
           for (int i = 0; i < jsonData['Search'].length; i++) {
@@ -53,7 +52,7 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amberAccent,
+      backgroundColor: Color(0xffE8C7DE),
       body: Container(
         child: FutureBuilder(
           future: _getCards(),
@@ -66,7 +65,7 @@ class _ResultScreenState extends State<ResultScreen> {
             } else {
               return Swiper(
                 layout: SwiperLayout.STACK,
-                itemHeight: 400,
+                itemHeight: 450,
                 itemWidth: MediaQuery.of(context).size.width - 2 * 64,
                 // GridView.builder
                 scrollDirection: Axis.horizontal,
