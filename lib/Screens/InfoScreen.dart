@@ -48,7 +48,7 @@ class _InfoScreenState extends State<InfoScreen> {
             child: Row(
               children: [
                 Container(
-                  color: Colors.amberAccent,
+                  // color: Colors.amberAccent,
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Center(
@@ -89,6 +89,7 @@ class _InfoScreenState extends State<InfoScreen> {
             right: 20,
             top: 140,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
@@ -102,20 +103,35 @@ class _InfoScreenState extends State<InfoScreen> {
                     ),
                   ],
                 ),
+                SizedBox(height: 20),
                 theFutureBuilder(
                   imdbID: widget.imdbID,
                   whatData: "Rated",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
                 ),
-                theFutureBuilder(
-                  imdbID: widget.imdbID,
-                  whatData: "Year",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+                Row(
+                  children: [
+                    Icon(Icons.calendar_today_outlined),
+                    SizedBox(width: 10),
+                    theFutureBuilder(
+                      imdbID: widget.imdbID,
+                      whatData: "Year",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+                    ),
+                  ],
                 ),
-                theFutureBuilder(
-                  imdbID: widget.imdbID,
-                  whatData: "Type",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+                Row(
+                  children: [
+                    Icon(Icons.format_quote_rounded),
+                    SizedBox(width: 10),
+                    theFutureBuilder(
+                      imdbID: widget.imdbID,
+                      whatData: "Type",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -157,10 +173,20 @@ class theFutureBuilder extends StatelessWidget {
     return FutureBuilder(
       future: _getData(whatData),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        return Text(
-          snapshot.data.toString(),
-          style: style,
-        );
+        if (whatData == "Title") {
+          return Text(
+            snapshot.data.toString(),
+            style: style,
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: Text(
+              snapshot.data.toString(),
+              style: style,
+            ),
+          );
+        }
       },
     );
   }
