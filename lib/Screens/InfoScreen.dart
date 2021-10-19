@@ -64,7 +64,7 @@ class _InfoScreenState extends State<InfoScreen> {
             ),
           ),
           Positioned(
-            top: 130,
+            top: 140,
             left: 20,
             child: Container(
               decoration: BoxDecoration(
@@ -86,29 +86,58 @@ class _InfoScreenState extends State<InfoScreen> {
             ),
           ),
           Positioned(
-            right: 20,
+            right: 10,
+            top: 50,
+            child: Container(
+              child: theFutureBuilder(
+                imdbID: widget.imdbID,
+                whatData: "Rated",
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+              decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+            ),
+          ),
+          Positioned(
+            top: 90,
+            left: 20,
+            child: Container(
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.star_rounded,
+                    color: Colors.amberAccent,
+                    size: 20,
+                  ),
+                  SizedBox(width: 3),
+                  theFutureBuilder(
+                    imdbID: widget.imdbID,
+                    whatData: "Ratings",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[400],
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+            ),
+          ),
+          Positioned(
+            right: 10,
             top: 140,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Icon(Icons.star, color: Colors.amberAccent),
-                    SizedBox(width: 10),
-                    theFutureBuilder(
-                      imdbID: widget.imdbID,
-                      whatData: "Ratings",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
-                    ),
-                  ],
-                ),
                 SizedBox(height: 20),
-                theFutureBuilder(
-                  imdbID: widget.imdbID,
-                  whatData: "Rated",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
-                ),
                 Row(
                   children: [
                     Icon(Icons.calendar_today_outlined),
@@ -179,12 +208,9 @@ class theFutureBuilder extends StatelessWidget {
             style: style,
           );
         } else {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            child: Text(
-              snapshot.data.toString(),
-              style: style,
-            ),
+          return Text(
+            snapshot.data.toString(),
+            style: style,
           );
         }
       },
