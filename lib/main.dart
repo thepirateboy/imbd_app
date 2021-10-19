@@ -19,6 +19,7 @@ class IMBdApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       routes: {
         InputScreen.id: (context) => InputScreen(),
       },
